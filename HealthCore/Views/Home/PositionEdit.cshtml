@@ -1,0 +1,30 @@
+﻿@model HealthCore.Models.Position
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование должности</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>Должность</label>
+    <input type="text" class="form-control btn-block" id="NameEdit" value="@Model.Name" />
+
+    <label>Признак</label>
+    <input type="text" class="form-control btn-block" id="PriznakEdit" value="@Model.Priznak"/>
+     
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="PositionEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<HealthCore.Models.Child>
+<label>Дети:</label>
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Ребенок
+        </th>
+        <th>
+            Дата рождения
+        </th>
+        <th>
+            Возраст
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.children)
+    {
+        <tr>
+            <td>
+                <input type="checkbox" name="inList" onchange="CountSelected()" value="@item.Id" >
+            </td>
+            <td>
+                @item.Fio
+            </td>
+            <td>
+               @{
+                    string DB = Convert.ToDateTime(item.DateBirth).ToString("d");
+                    if(item.DateBirth == null)
+                    {
+                        DB = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            </td>
+            
+            <td>
+                @{
+                    int Y = DateTime.Now.Year - Convert.ToDateTime(item.DateBirth).Year;
+                    string YY = Convert.ToString(Y);
+
+                }
+                @{
+                    if(item.DateBirth == null)
+                    {
+                        YY = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => YY)
+            </td>
+
+        </tr>
+    }
+</table>
+@ViewBag.Message
+

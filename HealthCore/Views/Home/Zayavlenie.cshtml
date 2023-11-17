@@ -1,0 +1,396 @@
+﻿@model IEnumerable<HealthCore.Models.Zayavlenie>
+
+    <style>
+    .loader {
+        overflow: hidden;
+        font-size: 5px;
+        margin: 50px auto;
+        text-indent: -9999em;
+        width: 11em;
+        height: 11em;
+        border-radius: 50%;
+        background: #4682B4;
+        background: -moz-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -webkit-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -o-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -ms-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: linear-gradient(to right, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        position: relative;
+        -webkit-animation: load3 1.4s infinite linear;
+        animation: load3 1.4s infinite linear;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+        .loader:before {
+            width: 50%;
+            height: 50%;
+            background: #4682B4;
+            border-radius: 100% 0 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+
+        .loader:after {
+            background: white;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            content: '';
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+    @@-webkit-keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+
+<h3>Заявления</h3>
+<hr>
+
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModal1" class="modal fade" style="margin-left:auto; margin-right:auto;">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent1' style="width:1200px; margin-left:-200px;">
+
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+
+
+
+<table>
+    <tr style="background-color:transparent;">
+        <td>
+            
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        
+        <td>
+          <center><label>С</label></center>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        
+        <td>
+          <center><label>По</label></center>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+             <center><label>Принятие</label></center>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+             <center><label>Оплата</label></center>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+    </tr>
+       <tr style="background-color:transparent;">
+        <td>
+            <button type="button" class="btn btn-outline-secondary" onclick="AddZay(0)" title="Добавить новое заявление"><i class="mdi mdi-library-plus"></i> Добавить заявление</button>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary" onclick="AddZay1(0)" title="Добавить новое заявление по разовому договору"><i class="mdi mdi-library-plus"></i> Добавить заявление(1)</button>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        
+        <td>
+            <input type="date" class="form-control btn-block" id="SZ" style="width:150px;" />
+            <script>
+                window.addEventListener('load',
+                    function (e) {
+                        var d = new Date();
+                        
+                        var day = d.getDate(); if (day < 10) day = '0' + day;
+                        var month = d.getMonth() - 1; if (month < 10) month = '0' + month;
+                        var year = d.getFullYear();
+                        document.getElementById("SZ").value = year + "-" + month + "-" + day;
+                    }, false);
+            </script>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        
+        <td>
+            <input type="date" class="form-control btn-block" id="PoZ" style="width:150px;" />
+            <script>
+                var d = new Date();
+                var day = d.getDate(); if (day < 10) day = '0' + day;
+                var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                var year = d.getFullYear();
+                document.getElementById("PoZ").value = year + "-" + month + "-" + day;
+            </script>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+             <select class="form-select" contenteditable="true" id="Prinyat">
+                   <option value="1" selected >Все</option>
+                   <option value="2">Принятые</option>
+                   <option value="3">Непринятые</option>
+                </select>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+             <select class="form-select" contenteditable="true" id="PriznakOplata">
+                   <option value="1" selected >Все</option>
+                   <option value="2">Оплаченные</option>
+                   <option value="3">Неоплаченные</option>
+                </select>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary" onclick="GetZayTab()">Вывести</button>
+        </td>
+        <td>
+            <button type="button" onclick="ReportZayDocx(0)" class="btn btn-outline-secondary" data-dismiss="modal" style="min-width:100px">Печать(.docx)</button>
+        </td>
+        
+    </tr>
+</table>
+<p></p>
+
+<center>
+    <div class="loader" id="loadImgZ" style="display:none;">
+    </div>
+</center>
+
+<div id="TableZay">
+<table class="table table-striped">
+    <tr>       
+            <th>
+                Номер
+            </th>
+       
+        <th>
+            Дата
+        </th>
+
+        <th>
+            Протокол
+        </th>
+
+        <th>
+           Сотрудник
+        </th>
+
+        <th>
+            С
+        </th>
+
+        <th>
+            По
+        </th>
+
+        <th>
+            На кого
+        </th>
+
+        <th>
+            Санаторий
+        </th>    
+        
+        <th>
+            Оплата
+        </th>  
+                                     
+        <th>
+            &nbsp;
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (item.Priznak == "не принято")
+            {
+                <td style="background-color:#FCE0E2;">
+                    @Html.DisplayFor(modelItem => item.NumberZ)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberZ)
+            </td>
+
+            }
+            <td>
+                @{
+                    string DB = Convert.ToDateTime(item.DateZ).ToString("d");
+                    if(item.DateZ == null)
+                    {
+                        DB = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Protocol.NumberP) 
+            </td>
+            <td>
+                @item.Employee.FirstName @item.Employee.LastName @item.Employee.MiddleName
+            </td>
+            <td>
+                @{
+                    string DBS = Convert.ToDateTime(item.S).ToString("d");
+                    if(item.S == null)
+                    {
+                        DBS = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            </td>
+            <td>
+                @{
+                    string DBPO = Convert.ToDateTime(item.Po).ToString("d");
+                    if(item.Po == null)
+                    {
+                        DBPO = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Who) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sanatorium.Name)
+            </td>
+            @if(item.PriznakOplata == 1)
+                {
+            <td>
+                ДА
+            </td>
+                }
+                else
+                {
+            <td style="color:red">
+                <b>НЕТ</b>
+            </td>  
+                }
+                                                             
+            <td>
+                <button type="button" class="btn btn-outline-primary"  onclick="ZayEdit(@item.Id)" title="Редактировать"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+</svg></button>
+                <button type="button" class="btn btn-outline-danger"  onclick="DeleteZay(@item.Id)" title="Удалить"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg></button>
+            
+                <button type="button" class="btn btn-outline-warning" onclick="Report(@item.Id)" title="Заявление"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+</svg></button>
+
+<button type="button" class="btn btn-outline-warning" onclick="ReportOplata(@item.Id)" title="Д/З на оплату"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+</svg></button>
+
+<button type="button" class="btn btn-outline-warning" onclick="ReportDopOplata(@item.Id)" title="Д/З на допуслуги"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+  <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
+</svg></button>
+
+@if(item.Priznak == "не принято")
+{
+<button type="button" class="btn btn-outline-primary" onclick="PutZay(@item.Id)" title="Принять"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+</svg></button>
+}        
+            </td>
+        </tr>
+    }
+
+</table>
+</div>

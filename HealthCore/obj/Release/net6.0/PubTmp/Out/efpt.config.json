@@ -1,0 +1,128 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "HealthCoreContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "HealthCore",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Banks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Child]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[City]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Country]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Department]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Dogovor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Fillial]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Koef]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Komissiya]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Naznach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Position]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Protocol]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sanatorium]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SummDogZay]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TableZay]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TypeDog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserRole]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Zayavlenie]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "S25HV.HealthCore",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

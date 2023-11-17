@@ -1,0 +1,76 @@
+﻿@model HealthCore.Models.Employee
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление сотрудника</h5>
+</div>
+<div class="modal-body">
+    <input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+        
+    <label>Фамилия</label>
+    <input type="text" class="form-control btn-block" id="First" />
+
+     <label>Имя</label>
+    <input type="text" class="form-control btn-block" id="Last" />
+
+     <label>Отчество</label>
+    <input type="text" class="form-control btn-block" id="Middle" />        
+        
+    <label>Должность</label>
+    <select class="form-select" contenteditable="true" id="Position">
+                   <option value="0" selected >Выберите должность</option>
+                    @foreach (var fil in ViewBag.listposition)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>
+                       
+                    }
+                                       
+    </select>
+
+    <label>Отдел</label>
+    <select class="form-select" contenteditable="true" id="Department">
+                   <option value="0" selected >Выберите отдел</option>
+                    @foreach (var fil in ViewBag.listdepartment)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>
+                       
+                    }
+                                       
+    </select>
+
+    <label>Подразделение</label>
+    <select class="form-select" contenteditable="true" id="Fillial">
+                   <option value="0">Выберите подразделение</option>
+                    @foreach (var fil in ViewBag.listfillial)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>
+                       
+                    }
+                                       
+    </select>
+
+    <label>Аддрес</label>
+    <input type="text" class="form-control btn-block" id="Address" />
+
+    <label>Дата рождения</label>
+    <input type="date" class="form-control btn-block" id="BirthDay" />
+
+    <label>Пол</label>
+    <select class="form-select" contenteditable="true" id="Pol">
+      <option value="0" selected >Выберите пол</option>             
+  <option value="муж.">муж.</option>
+  <option value="жен.">жен.</option>
+  <option value="ср.">ср.</option>
+                                                          
+    </select>
+                                
+</div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="EmployeeSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+
+

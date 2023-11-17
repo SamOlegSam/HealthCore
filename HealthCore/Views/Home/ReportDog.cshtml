@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HealthCore.Models.SummDogZay>
+<h3>Сумма по договорам</h3>
+<hr>
+
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+
+<table class="table table-striped">
+   
+    @foreach (var item in ViewBag.ListGroup)
+    {   
+            <tr>
+                @if (item.sumList >= (ViewBag.K.Control * ViewBag.k.Value))
+                {
+                <td colspan = "4" style="background-color:red;">                    
+                    <b>@item.sanatorium по договору № @item.numberD от @Convert.ToDateTime(item.dateD).ToString("d") | общая сумма -  @item.sumList рублей | осталось: @((item.dateEND - DateTime.Now).Days) дней |  </b> 
+                   
+                </td>  
+            }
+            else
+            {
+            <td colspan = "4" style="background-color:lightgrey;">                    
+                    <b>@item.sanatorium Договор № @item.numberD от @Convert.ToDateTime(item.dateD).ToString("d") | общая сумма -  @item.sumList рублей | осталось: @((item.dateEND - DateTime.Now).Days) дней |  </b> 
+                   
+                </td>                
+            }
+            </tr>
+            @foreach(var i in item.spis)
+        {
+            <tr>
+                <td>
+Заявление № @i.Zayavlenie.NumberZ от @i.Zayavlenie.DateZ
+                </td>
+            </tr>
+        }
+    }
+       
+</table>
+@*-----------------------------------------------------*@

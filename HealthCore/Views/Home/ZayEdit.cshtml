@@ -1,0 +1,967 @@
+﻿@model HealthCore.Models.Zayavlenie
+
+
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-header">
+    <h5> Редактирование заявления</h5>
+</div>
+
+<input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+<input type="hidden" class="form-control btn-block" id="ID" value="@Model.Id" />
+
+@if(Model.TurOpeId ==null)
+{
+<table class="table">
+    <tr>
+        <td>
+            <label>Номер заявленяе</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" value="@Model.NumberZ"/>
+        </td>
+        <td></td>
+        <td>
+            <label>Дата заявления</label>
+            <input type="date" class="form-control" id="datazEdit">
+            <script>
+
+                    var str = "@Model.DateZ";
+                    console.log(str);
+
+                    var day = str.substr(0, 2);
+                    console.log(day);
+
+                    var month = str.substr(3, 2);
+                    console.log(month);
+
+                    var year = str.substr(6, 4);
+                    console.log(year);
+
+                    var strDate = year + "-" + month + "-" + day
+                    console.log(strDate);
+
+
+                    document.getElementById("datazEdit").value = strDate;
+
+                </script>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Протокол</label>
+            <select class="form-select" contenteditable="true" id="protocolEdit">
+            @foreach (var pr1 in ViewBag.listprot)
+            {
+                if (pr1.Id == @Model.ProtocolId)
+                {
+                    <option value="@pr1.Id" selected> @pr1.NumberP от @Convert.ToDateTime(pr1.DateProt).ToString("d") </option>
+                }
+                else
+                {
+                    <option value="@pr1.Id"> @pr1.NumberP от @Convert.ToDateTime(pr1.DateProt).ToString("d")</option>
+                }
+            }
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Сотрудник</label>
+            <select class="form-select" contenteditable="true" id="sotrEdit">
+                @foreach (var sot in ViewBag.listempl)
+                {
+                    if (sot.Id == @Model.EmployeeId)
+                    {
+                        <option value="@sot.Id" selected> @sot.FirstName @sot.LastName @sot.MiddleName</option>
+                    }
+                    else
+                    {
+                        <option value="@sot.Id"> @sot.FirstName @sot.LastName @sot.MiddleName</option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Путевка</label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <form>                
+                <div class="col-md-10" id="radio">
+                    @if (Model.Who.Trim() == "работника")
+                    {
+                        <input name="Gender" value="1" type="radio" checked id="1">
+                        <label>Работник</label>
+                        
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                        <label>Семейная</label>
+                    }
+                    
+                    @if (Model.Who.Trim() == "пенсионера")
+                    {
+                        <input name="Gender" value="1" type="radio" id="1">
+                        <label>Работник</label>
+                        
+                        <input name="Gender" value="4" type="radio" checked id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                        <label>Семейная</label>
+                    }
+
+                        @if (Model.Who.Trim() == "детей")
+                    {
+                        <input name="Gender" value="1" type="radio"  id="1">
+                        <label>Работник</label>
+
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" checked id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                            <label>Семейная</label>
+                        }
+                        
+                             @if (Model.Who.Trim() == "семейная")
+                    {
+                        <input name="Gender" value="1" type="radio" id="1">
+                        <label>Работник</label>
+
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio"  id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" checked id="3">
+                        <label>Семейная</label>
+                    }
+                        
+                    
+                </div>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <div id="deti">
+
+                @{
+                    if(Model.Who == "детей")
+                    {
+                        <table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Ребенок
+        </th>
+        <th>
+            Дата рождения
+        </th>
+        <th>
+            Возраст
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.listchild)
+         {
+
+       int flag = 0;
+         @foreach (var i in ViewBag.listtab)
+                {
+                    if(i.ChildId == item.Id)
+                    {
+                        flag = 1;
+                    }
+                }
+
+       <tr>
+            <td>
+          
+              @if(flag == 1)
+        {
+        <input type="checkbox" name="inList" checked onchange="CountSelected()" value="@item.Id" >   
+        }
+              else
+        {
+        <input type="checkbox" name="inList" onchange="CountSelected()" value="@item.Id" >   
+        }
+                                                               
+            
+            </td>
+            <td>
+                @item.Fio
+            </td>
+            <td>
+               @{
+                    string DB = Convert.ToDateTime(item.DateBirth).ToString("d");
+                    if(item.DateBirth == null)
+                    {
+                        DB = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            </td>
+            
+            <td>
+                @{
+                    int Y = DateTime.Now.Year - Convert.ToDateTime(item.DateBirth).Year;
+                    string YY = Convert.ToString(Y);
+
+                }
+                @{
+                    if(item.DateBirth == null)
+                    {
+                        YY = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => YY)
+            </td>
+
+         </tr>
+
+      flag = 0;
+           }
+</table>
+                    }
+                }
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <label>Куда</label>
+            
+            <select class="form-select" contenteditable="true" id="placeEdit">
+            @foreach (var place in ViewBag.listDog)
+            {
+                if (place.id == @Model.SanatoriumId)
+                {
+                    <option value="@place.id" selected> @place.Name</option>
+                }
+                else
+                {
+                    <option value="@place.id"> @place.Name</option>
+                }
+            }
+        </select>
+        </td>
+    </tr>
+     <tr>
+        <td colspan="3" id = DOG1>
+
+        </td>
+    <tr>
+        <td colspan="3">
+            <label id="warning" style = "color: white;">Количество дней не должно быть менее 7 дней!!!</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>с:</label>
+            <input type="date" class="form-control" id="datasEdit">
+            <script>
+
+                    var strs = "@Model.S";
+                    
+                    var days = strs.substr(0, 2);
+                    
+                    var months = strs.substr(3, 2);
+                    
+                    var years = strs.substr(6, 4);
+                    
+                    var strDates = years + "-" + months + "-" + days
+                    
+                    document.getElementById("datasEdit").value = strDates;
+
+                </script>
+        </td>
+        
+        <td>
+            <label>по:</label>
+            <input type="date" class="form-control" id="datapoEdit">
+            <script>
+
+                    var strpo = "@Model.Po";
+                    
+                    var daypo = strpo.substr(0, 2);
+                    
+                    var monthpo = strpo.substr(3, 2);
+                    
+                    var yearpo = strpo.substr(6, 4);
+                    
+                    var strDatepo = yearpo + "-" + monthpo + "-" + daypo
+                    
+                    document.getElementById("datapoEdit").value = strDatepo;
+
+                </script>
+        </td>
+        <td><label>дней:</label>
+            <input type="text" class="form-control btn-block" id="Kol" readonly/>
+        </td>
+    </tr>  
+    <tr>
+        <td>
+            <label>сумма по договору:</label>
+            <input type="text" class="form-control btn-block" id="SummaEdit" value="@Model.Summa" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+        <td>
+            <div>
+             @if (Model.PriznakOplata == 1)
+    {        
+                <input type="checkbox" id="rulesOplata" class="checkbox" checked>
+                <label> Оплачено</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesOplata" class="checkbox">
+                <label> Оплачено</label>            
+    }
+   </div>
+   <div>
+     @if (Model.Priznak == "принято")
+    {        
+                <input type="checkbox" id="rulesClose" class="checkbox" checked>
+                <label> Отчитался</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesClose" class="checkbox">
+                <label> Отчитался</label>            
+    }
+</div>
+<div>
+     @if (Model.Anulirovano == 1)
+    {        
+                <input type="checkbox" id="rulesNule" class="checkbox" checked>
+                <label> Анулировано</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesNule" class="checkbox">
+                <label> Анулировано</label>            
+    }
+</div>
+        </td>
+        <td>
+            <label>сумма за допуслуги:</label>
+            <input type="text" class="form-control btn-block" id="SummaDopEdit" value="@Model.SummaDop" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+    </tr>
+
+    <tr>
+         <td>
+            <label>Создал /изменил</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" readonly value="@Model.UserMod"/>
+        </td>
+        <td> </td>
+        <td>
+            <label>Дата изменения</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" readonly value="@Model.DateMod"/>
+        </td>
+    </tr>
+    
+   </table>
+
+<input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-warning" style="min-width:100px" onclick="Report(ID)">Печать</button>
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="ZayEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+    </div>
+}
+
+else
+{
+  <table class="table">
+    <tr>
+        <td>
+            <label>Номер заявленяе</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" value="@Model.NumberZ"/>
+        </td>
+        <td></td>
+        <td>
+            <label>Дата заявления</label>
+            <input type="date" class="form-control" id="datazEdit">
+            <script>
+
+                    var str = "@Model.DateZ";
+                    console.log(str);
+
+                    var day = str.substr(0, 2);
+                    console.log(day);
+
+                    var month = str.substr(3, 2);
+                    console.log(month);
+
+                    var year = str.substr(6, 4);
+                    console.log(year);
+
+                    var strDate = year + "-" + month + "-" + day
+                    console.log(strDate);
+
+
+                    document.getElementById("datazEdit").value = strDate;
+
+                </script>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Протокол</label>
+            <select class="form-select" contenteditable="true" id="protocolEdit">
+            @foreach (var pr1 in ViewBag.listprot)
+            {
+                if (pr1.Id == @Model.ProtocolId)
+                {
+                    <option value="@pr1.Id" selected> @pr1.NumberP от @Convert.ToDateTime(pr1.DateProt).ToString("d") </option>
+                }
+                else
+                {
+                    <option value="@pr1.Id"> @pr1.NumberP от @Convert.ToDateTime(pr1.DateProt).ToString("d")</option>
+                }
+            }
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Сотрудник</label>
+            <select class="form-select" contenteditable="true" id="sotrEdit">
+                @foreach (var sot in ViewBag.listempl)
+                {
+                    if (sot.Id == @Model.EmployeeId)
+                    {
+                        <option value="@sot.Id" selected> @sot.FirstName @sot.LastName @sot.MiddleName</option>
+                    }
+                    else
+                    {
+                        <option value="@sot.Id"> @sot.FirstName @sot.LastName @sot.MiddleName</option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Путевка</label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <form>                
+                <div class="col-md-10" id="radio">
+                    @if (Model.Who.Trim() == "работника")
+                    {
+                        <input name="Gender" value="1" type="radio" checked id="1">
+                        <label>Работник</label>
+                        
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                        <label>Семейная</label>
+                    }
+                    
+                    @if (Model.Who.Trim() == "пенсионера")
+                    {
+                        <input name="Gender" value="1" type="radio" id="1">
+                        <label>Работник</label>
+                        
+                        <input name="Gender" value="4" type="radio" checked id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                        <label>Семейная</label>
+                    }
+
+                        @if (Model.Who.Trim() == "детей")
+                    {
+                        <input name="Gender" value="1" type="radio"  id="1">
+                        <label>Работник</label>
+
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio" checked id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" id="3">
+                            <label>Семейная</label>
+                        }
+                        
+                             @if (Model.Who.Trim() == "семейная")
+                    {
+                        <input name="Gender" value="1" type="radio" id="1">
+                        <label>Работник</label>
+
+                        <input name="Gender" value="4" type="radio" id="4">
+                        <label>Пенсионер</label>
+
+                        <input name="Gender" value="2" type="radio"  id="2">
+                        <label>Дети</label>
+
+                        <input name="Gender" value="3" type="radio" checked id="3">
+                        <label>Семейная</label>
+                    }
+                        
+                    
+                </div>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <div id="deti">
+
+                @{
+                    if(Model.Who == "детей")
+                    {
+                        <table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Ребенок
+        </th>
+        <th>
+            Дата рождения
+        </th>
+        <th>
+            Возраст
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.listchild)
+         {
+
+       int flag = 0;
+         @foreach (var i in ViewBag.listtab)
+                {
+                    if(i.ChildId == item.Id)
+                    {
+                        flag = 1;
+                    }
+                }
+
+       <tr>
+            <td>
+          
+              @if(flag == 1)
+        {
+        <input type="checkbox" name="inList" checked onchange="CountSelected()" value="@item.Id" >   
+        }
+              else
+        {
+        <input type="checkbox" name="inList" onchange="CountSelected()" value="@item.Id" >   
+        }
+                                                               
+            
+            </td>
+            <td>
+                @item.Fio
+            </td>
+            <td>
+               @{
+                    string DB = Convert.ToDateTime(item.DateBirth).ToString("d");
+                    if(item.DateBirth == null)
+                    {
+                        DB = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            </td>
+            
+            <td>
+                @{
+                    int Y = DateTime.Now.Year - Convert.ToDateTime(item.DateBirth).Year;
+                    string YY = Convert.ToString(Y);
+
+                }
+                @{
+                    if(item.DateBirth == null)
+                    {
+                        YY = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => YY)
+            </td>
+
+         </tr>
+
+      flag = 0;
+           }
+</table>
+                    }
+                }
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <label>Санаторий</label>
+            
+            <select class="form-select" contenteditable="true" id="placeEdit">
+            @foreach (var place in ViewBag.listsanat)
+            {
+                if (place.Id == @Model.SanatoriumId)
+                {
+                    <option value="@place.Id" selected> @place.Name</option>
+                }
+                else
+                {
+                    <option value="@place.Id"> @place.Name</option>
+                }
+            }
+        </select>
+        </td>
+    </tr>
+    
+        <tr>              
+            <td colspan="3">
+                <label>ТурОператор</label>
+                <select class="form-select" contenteditable="true" id="KontrEdit">
+                    @foreach (var place in ViewBag.listKontr)
+            {
+                if (place.Id == @Model.TurOpeId)
+                {
+                    <option value="@place.Id" selected> @place.Name</option>
+                }
+                else
+                {
+                    <option value="@place.Id"> @place.Name</option>
+                }
+            }                            
+
+                </select>
+            </td>  
+        </tr>
+        <tr>
+            <td>
+                <label>Номер договора</label>
+                <input type="text" class="form-control btn-block" id="NumberDog" value="@Model.NumberDog"/>
+            </td>
+            <td></td>
+            <td>
+                <label>Дата договора</label>
+                <input type="date" class="form-control" id="DateDog" value="@Model.DateDog">
+                <script>        
+                    var d = new Date();
+                    var day = d.getDate(); if (day < 10) day = '0' + day;
+                    var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                    var year = d.getFullYear();
+                    document.getElementById("DateDog").value = year + "-" + month + "-" + day;
+
+                </script>
+            </td>
+        </tr>
+
+     <tr>
+        <td colspan="3" id = DOG1>
+
+        </td>
+    <tr>
+        <td colspan="3">
+            <label id="warning" style = "color: white;">Количество дней не должно быть менее 7 дней!!!</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>с:</label>
+            <input type="date" class="form-control" id="datasEdit">
+            <script>
+
+                    var strs = "@Model.S";
+                    
+                    var days = strs.substr(0, 2);
+                    
+                    var months = strs.substr(3, 2);
+                    
+                    var years = strs.substr(6, 4);
+                    
+                    var strDates = years + "-" + months + "-" + days
+                    
+                    document.getElementById("datasEdit").value = strDates;
+
+                </script>
+        </td>
+        
+        <td>
+            <label>по:</label>
+            <input type="date" class="form-control" id="datapoEdit">
+            <script>
+
+                    var strpo = "@Model.Po";
+                    
+                    var daypo = strpo.substr(0, 2);
+                    
+                    var monthpo = strpo.substr(3, 2);
+                    
+                    var yearpo = strpo.substr(6, 4);
+                    
+                    var strDatepo = yearpo + "-" + monthpo + "-" + daypo
+                    
+                    document.getElementById("datapoEdit").value = strDatepo;
+
+                </script>
+        </td>
+        <td><label>дней:</label>
+            <input type="text" class="form-control btn-block" id="Kol" readonly/>
+        </td>
+    </tr>  
+    <tr>
+        <td>
+            <label>сумма по договору:</label>
+            <input type="text" class="form-control btn-block" id="SummaEdit" value="@Model.Summa" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+        <td>
+            <div>
+             @if (Model.PriznakOplata == 1)
+    {        
+                <input type="checkbox" id="rulesOplata" class="checkbox" checked>
+                <label> Оплачено</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesOplata" class="checkbox">
+                <label> Оплачено</label>            
+    }
+   </div>
+   <div>
+     @if (Model.Priznak == "принято")
+    {        
+                <input type="checkbox" id="rulesClose" class="checkbox" checked>
+                <label> Отчитался</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesClose" class="checkbox">
+                <label> Отчитался</label>            
+    }
+</div>
+<div>
+     @if (Model.Anulirovano == 1)
+    {        
+                <input type="checkbox" id="rulesNule" class="checkbox" checked>
+                <label> Анулировано</label>            
+    }
+    else
+    {        
+                <input type="checkbox" id="rulesNule" class="checkbox">
+                <label> Анулировано</label>            
+    }
+</div>
+        </td>
+        <td>
+            <label>сумма за допуслуги:</label>
+            <input type="text" class="form-control btn-block" id="SummaDopEdit" value="@Model.SummaDop" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+    </tr>
+    <tr>
+         <td>
+            <label>Создал /изменил</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" readonly value="@Model.UserMod"/>
+        </td>
+        <td> </td>
+        <td>
+            <label>Дата изменения</label>
+            <input type="text" class="form-control btn-block" id="numberEdit" readonly value="@Model.DateMod"/>
+        </td>
+    </tr>
+    
+   </table>
+
+<input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-warning" style="min-width:100px" onclick="Report(ID)">Печать</button>
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="ZayEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+    </div>
+}  
+}
+
+<script>
+    var col = $('input[type="radio"]:checked').attr('id');
+
+    if (col == '2') {
+            $('#deti').empty();
+            var ID = $('#IDEdit').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetChildrenEdit")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();
+                    $('#deti').html(data);
+                    }
+                });
+        }
+
+         if (col == '3') {
+            $('#deti').empty();
+            var ID = $('#IDEdit').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetFamilyEdit")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();
+                    $('#deti').html(data);
+                    }
+                });
+        }
+
+</script>
+
+<script>
+$('form').on('change', function() {
+  var col = $('input[type="radio"]:checked').attr('id');
+    {
+        if (col == '2') {
+            $('#deti').empty();
+            var ID = $('#sotrEdit').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetChildren")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();
+                    $('#deti').html(data);
+                    }
+                });
+        }
+        if (col == '3') {
+            $('#deti').empty();
+            var ID = $('#sotrEdit').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetFamily")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();
+                    $('#deti').html(data);
+                    }
+                });
+        }
+        if (col == '1')
+        {
+            $('#deti').html('');
+
+        }
+
+    }
+    });
+</script>
+
+<script>
+    
+    $('#datasEdit').change(function(){
+	var date1 =new Date($("#datasEdit").val());
+	var date2 = new Date($("#datapoEdit").val());
+  if(date1 != 'Invalid Date' && date2 != 'Invalid Date'){
+  	var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        $('#Kol').css('border-color', 'lightgrey');
+        $('#warning').css('color', 'white');
+	$('#Kol').val(diffDays +1);
+    console.log('Все посчитано=' + diffDays);
+  } 
+  if (diffDays +1 < 7)
+  {
+      $('#Kol').css('border-color', 'Red');
+       $('#warning').css('color', 'red');
+  }
+  else $('#Kol').css('border-color', 'lightgrey');
+  console.log('Выберите даты');
+});
+
+$('#datapoEdit').change(function(){
+	var date1 =new Date($("#datasEdit").val());
+	var date2 = new Date($("#datapoEdit").val());
+  if(date1 != 'Invalid Date' && date2 != 'Invalid Date'){
+  	var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    $('#Kol').css('border-color', 'lightgrey');
+    $('#warning').css('color', 'white');
+	$('#Kol').val(diffDays +1);
+    console.log('Все посчитано=' + diffDays);
+  }
+  if (diffDays +1 < 7)
+  {
+      $('#Kol').css('border-color', 'Red');
+      $('#warning').css('color', 'red');
+  }
+  else  $('#Kol').css('border-color', 'lightgrey');
+  console.log('Выберите даты');
+});
+
+//-----------------------------------
+$(function d() {
+        placeEdit.addEventListener('change', function (e) {
+                        
+            var data = {
+                               
+                'ID': $('#InvIDEdit').val(),
+                'SanatoriumId': $('#placeEdit').val(),
+                'DateZ': $('#datazEdit').val(),
+                
+            };
+            $.ajax({
+                url: "/Home/SummDogList",
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                 success: function (result) {
+                $('#DOG1').html("");
+                $('#DOG1').html(result);
+        },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+    })
+//-----------------------------------
+
+</script>

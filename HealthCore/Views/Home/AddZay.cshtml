@@ -1,0 +1,252 @@
+﻿@model HealthCore.Models.Zayavlenie
+
+<div class="modal-header">
+    <h5> Добавление заявления</h5>
+</div>
+
+<input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+<table class="table" id="tabbEdit">    
+    <tr>
+        <td>
+            <label>Номер заявленяе</label>
+            <input type="text" class="form-control btn-block" id="number" value = "@ViewBag.numberZay"/>
+        </td>
+        <td></td>
+        <td>
+            <label>Дата заявления</label>
+            <input type="date" class="form-control" id="dataz">
+            <script>        
+                    var d = new Date();
+                            var day = d.getDate(); if (day < 10) day = '0' + day;
+                            var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                            var year = d.getFullYear();
+                            document.getElementById("dataz").value = year + "-" + month + "-" + day;
+                    
+    </script>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Протокол</label>
+          <select class="form-select" contenteditable="true" id="prot">
+                   <option value="-1" selected >Выберите протокол</option>
+                    @foreach (var fil in ViewBag.listprot)
+                    {                       
+                            <option value="@fil.Id"> @fil.NumberP от @Convert.ToDateTime(fil.DateProt).ToString("d") </option>                                                   
+                    }
+                                       
+                </select>
+        </td>
+         
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Сотрудник</label>
+            <select class="form-select" contenteditable="true" id="sotr">
+                   <option value="0" selected >Выберите сотрудника</option>
+                    @foreach (var fil1 in ViewBag.listempl)
+                    {                       
+                            <option value="@fil1.Id"> @fil1.FirstName @fil1.LastName @fil1.MiddleName</option>
+                       
+                    }
+                                       
+                </select>
+       </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label>Путевка</label>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <form>
+                <div class="col-md-10" id="radio">
+                    <input name="Gender" value="1" type="radio" checked id="1">
+                    Работник
+                     <input name="Gender" value="1" type="radio" id="4">
+                    Пенсионер
+                    <input name="Gender" value="2" type="radio" id="2">
+                    Дети
+                    <input name="Gender" value="3" type="radio" id="3">
+                    Семейная
+
+                </div>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <div id="deti">
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="3">
+            <label>Куда</label>
+            <select class="form-select" contenteditable="true" id="Sanatorium">
+                   <option value="0" selected >Выберите санаторий</option>
+                    @foreach (var fil2 in ViewBag.listDog)
+                    {                       
+                            <option value="@fil2.id"> @fil2.Name </option>
+                       
+                    }
+                                       
+                </select>
+      </td>        
+    </tr>
+    <tr>
+        <td colspan="3" id = DOG>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <label id="warning" style = "color: white;">Количество дней не должно быть менее 7 дней!!!</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>с:</label>
+            <input type="date" class="form-control" id="datas">
+        </td>        
+        <td>
+            <label>по:</label>
+            <input type="date" class="form-control" id="datapo">
+        </td>
+        <td><label>дней:</label>
+            <input type="text" class="form-control btn-block" id="Kol" readonly/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>сумма по договору:</label>
+            <input type="text" class="form-control btn-block" id="Summa" value="0,00" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+        <td></td>
+        <td>
+            <label>сумма за допуслуги:</label>
+            <input type="text" class="form-control btn-block" id="SummaDop" value="0,00" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');"/>
+        </td>
+    </tr>
+   
+</table>
+
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="ZaySave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+
+
+</div>
+
+<script>
+$('form').on('change', function() {
+  var col = $('input[type="radio"]:checked').attr('id');
+    {
+        if (col == '2') {
+            $('#deti').empty();
+            var ID = $('#sotr').val();  
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetChildren")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();                    
+                    $('#deti').html(data);
+                    }
+                });
+        }
+        if (col == '3') {
+            $('#deti').empty();
+            var ID = $('#sotr').val();  
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetFamily")/' + ID,
+                success: function (data) {
+                    $('#deti').empty();                    
+                    $('#deti').html(data);
+                    }
+                });
+        }
+        if (col == '1')
+        {
+            $('#deti').html('');
+            
+        }
+        
+    }
+    });
+</script>
+
+<script>
+    
+    $('#datas').change(function(){
+	var date1 =new Date($("#datas").val());
+	var date2 = new Date($("#datapo").val());
+  if(date1 != 'Invalid Date' && date2 != 'Invalid Date'){
+  	var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        $('#Kol').css('border-color', 'lightgrey');
+        $('#warning').css('color', 'white');
+	$('#Kol').val(diffDays +1);
+    console.log('Все посчитано=' + diffDays);
+  } 
+  if (diffDays +1 < 7)
+  {
+      $('#Kol').css('border-color', 'Red');
+       $('#warning').css('color', 'red');
+  }
+  else $('#Kol').css('border-color', 'lightgrey');
+  console.log('Выберите даты');
+});
+
+$('#datapo').change(function(){
+	var date1 =new Date($("#datas").val());
+	var date2 = new Date($("#datapo").val());
+  if(date1 != 'Invalid Date' && date2 != 'Invalid Date'){
+  	var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+		var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    $('#Kol').css('border-color', 'lightgrey');
+    $('#warning').css('color', 'white');
+	$('#Kol').val(diffDays +1);
+    console.log('Все посчитано=' + diffDays);
+  }
+  if (diffDays +1 < 7)
+  {
+      $('#Kol').css('border-color', 'Red');
+      $('#warning').css('color', 'red');
+  }
+  else  $('#Kol').css('border-color', 'lightgrey');
+  console.log('Выберите даты');
+});
+
+//-----------------------------------
+$(function d() {
+        Sanatorium.addEventListener('change', function (e) {
+                        
+            var data = {
+                               
+                'ID': $('#InvIDEdit').val(),
+                'SanatoriumId': $('#Sanatorium').val(),
+                'DateZ': $('#dataz').val(),
+                
+            };
+            $.ajax({
+                url: "/Home/SummDogList",
+                type: "POST",
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                 success: function (result) {
+                $('#DOG').html("");
+                $('#DOG').html(result);
+        },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        });
+    })
+//-----------------------------------
+</script>

@@ -1,0 +1,33 @@
+﻿@model HealthCore.Models.City
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление города</h5>
+</div>
+<div class="modal-body">
+    <input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+        
+    <label>Город</label>
+    <input type="text" class="form-control btn-block" id="City" />
+        
+    <label>Страна</label>
+    <select class="form-select" contenteditable="true" id="idUS">
+                   <option value="0" selected >Выберите страну</option>
+                    @foreach (var fil in ViewBag.listcountry)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>
+                       
+                    }
+                                       
+                </select>
+                                
+</div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="CitySave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+
+

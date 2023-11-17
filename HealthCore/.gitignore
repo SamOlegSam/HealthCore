@@ -1,0 +1,3 @@
+# Исключить все файлы с расширение .gif
+wwwroot/Images/sea1.gif
+obj/Release/net6.0/PubTmp/Out/wwwroot/Images/sea1.gif

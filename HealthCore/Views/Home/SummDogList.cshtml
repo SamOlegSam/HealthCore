@@ -1,0 +1,120 @@
+﻿<table width=100%>
+    <tr style="text-align:center;">
+        <th width=50%>Договор</th>
+        <th width=25%>Дата</th>
+        <th width=25%>Сумма</th>
+    </tr>
+    @foreach(var item in ViewBag.listDogSumm)
+    {
+        @if(item.priznakkontrol == 1 || item.priznakkontrol == 3)
+        {
+            if(Convert.ToDouble(item.sumList) > Convert.ToDouble(ViewBag.BV.Control) * Convert.ToDouble(ViewBag.BV.Value))
+        {
+            <tr>
+                <td colspan="3" style="text-align:center;"> <label style="color:darkred;"><b>Сумма по договору превышает @ViewBag.BV.Control БВ!!!</b></label></td>
+            </tr>
+          <tr style="margin-right:10px; background-color: #ff6666;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25% >
+            @item.sumList
+        </td>
+    </tr>  
+        }
+
+       else if (Convert.ToDouble(item.sumList)  > Convert.ToDouble(ViewBag.BV.Preduptejdenie) * Convert.ToDouble(ViewBag.BV.Value))
+        {
+          <tr style="margin-right:10px; background-color: #ffe6e6;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25%>
+            @item.sumList
+        </td>
+    </tr>  
+        }
+
+        else
+        {
+            <tr style="margin-right:10px;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25%>
+            @item.sumList
+        </td>
+    </tr>
+        } 
+        }
+
+        else if(item.priznakkontrol == 2)
+        {
+            if(Convert.ToDouble(item.sumList) > Convert.ToDouble(item.sumdog))
+        {
+            <tr>
+                <td colspan="3" style="text-align:center;"> <label style="color:darkred;"><b>Сумма по договору превышает @item.sumdog</b></label></td>
+            </tr>
+          <tr style="margin-right:10px; background-color: #ff6666;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25% >
+            @item.sumList
+        </td>
+    </tr>  
+        }
+
+       else if (Convert.ToDouble(item.sumList)  > item.sumdog)
+        {
+          <tr style="margin-right:10px; background-color: #ffe6e6;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25%>
+            @item.sumList
+        </td>
+    </tr>  
+        }
+
+        else
+        {
+            <tr style="margin-right:10px;">
+        <td width=50%>
+@item.numberD
+        </td>
+        <td width=25%>
+@(Convert.ToDateTime(item.dateD).ToString("d"))
+        </td>
+        <td width=25%>
+            @item.sumList
+        </td>
+                </tr>
+            } 
+        }
+
+        else
+        {
+           <tr>
+                <td colspan="3" style="text-align:center;"> <label>Нет контроля</label></td>
+            </tr> 
+        }
+
+    }
+</table>
+

@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HealthCore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HealthCore.styles.css" asp-append-version="true" />
+</head>
+
+@*-----------------------------------------------------------*@
+    <style>
+        .dws-menu *{
+            margin:0;
+            padding:0;
+            min-width:120px;
+        }
+        .dws-menu ul,
+        .dws-menu ol{
+            list-style:none;
+        }
+        .dws-menu > ul{
+            display:flex;
+            justify-content:center;
+        }
+            .dws-menu > ul li a {
+                display: block;
+                background: #ececed;
+                padding: 15px 30px 15px 40px;
+                font-size: 14px;
+                color: #454547;
+                text-decoration: none;
+                text-transform: uppercase;
+                transition: all 0.3s ease;
+            }
+            .dws-menu > ul li {
+                position: relative;
+                border-left: 1px solid #c7c8ca;
+            }
+        .dws-menu > ul li:first-child{
+            border-left: 1px solid #b2b3b5;
+        }
+        .dws-menu > ul li:last-child {
+                border-left: 1px solid #babbbb;
+        }
+        .dws-menu li a:hover{
+                background:#454547;
+                color:#ffffff;
+                box-shadow: 1px 5px 10px -5px black;
+                transition: all 0.3s ease;
+        }
+        .dws-menu li ul{
+            position:absolute;
+            min-width:150px;
+            display:none;
+        }
+        .dws-menu li > ul li{
+            border: 1px solid #c7c8ca;
+        }
+        .dws-menu li > ul li a{
+            padding: 10px;
+            text-transform:none;
+            background: #e4e4e5;
+        }
+        .dws-menu li > ul li ul {
+            position:absolute;
+            right: -150px;
+            top:0px;
+        }
+        .dws-menu li:hover > ul{
+            display:block;
+        }
+        
+    </style>
+    @*------------------------------------------------------------*@
+           
+    <body style="background-image: url(/Images/fon10.png); background-repeat: round;">
+
+    <header style= "background: rgb(140,140,140); background: linear-gradient(180deg, rgba(140,140,140,1) 0%, rgba(186,187,187,0.9976365546218487) 23%, rgba(255,255,255,1) 100%);">
+        
+        <table style="margin:auto; width:97%;">
+            <tr>
+                <td style="width:15%; text-align:center; vertical-align:middle;"> 
+                    <a href="/Home/Index/"><img src="/Images/logo2.png"></a>
+                   
+                   
+                </button>
+                </td>
+                <td style="width:70%">
+                    <nav class="dws-menu ">
+                    <ul>
+            <li><a href="/Home/Index/">Главная</a></li>
+            <li>
+                <a href="#">Протоколы/ Заявления</a>
+                <ul>
+                    <li>
+                        <a href="/Home/Protocol/">Протоколы</a>                     
+                    </li>
+                    <li>
+                        <a href="/Home/Zayavlenie/">Заявления</a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">Справочники</a>
+                <ul>
+                    <li>
+                        <a href="/Home/Dogovor">Договоры</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Employee">Сотрудники</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Child">Дети</a>                       
+                    </li>
+                    <li>
+                        <a href="/Home/Country">Страны</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/City">Города</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Banks">Банки</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Sanatorium">Контрагенты</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Filial">Подразделения</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Department">Отделы</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/Position">Должности</a>                        
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="/Home/Komissiya/">Комиссия</a>                
+            </li>
+            
+            
+                                    <li>
+                <a href="#">Отчёты</a>
+                <ul>
+                    <li>
+                        <a href="/Home/ReportPrint/">Оздоровившиеся сотрудники</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/ReportDog/">Суммы по договорам</a>                        
+                    </li>
+                    <li>
+                        <a href="/Home/TopSanatorium/">Рейтинг санаториев</a>                        
+                    </li>
+                </ul>
+            </li>
+
+@{
+    if ((@User.Identity?.Name == "Oleg") || (@User.Identity?.Name == "Marina"))
+    {
+                       <li>
+                <a href="#">Администратор</a>
+                <ul>
+
+                    <li>
+                        <a href="/Home/LoginPassword/">Пользователи</a>                        
+                    </li>
+
+                    <li>
+                        <a href="/Home/Koef/">Коэффициенты</a>                        
+                    </li>
+                    
+                </ul>
+            </li>                  
+  }
+    }                   
+            
+            <li><a onclick="Reference()" class="st">Справка</a></li>            
+            
+        </ul>
+        <nav/>
+                </td>
+                <td style="margin:10px; padding:10px; width:15%; text-align:right;"> <partial name="_LoginPartial" /></td>
+            </tr>
+        </table>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container;" style="text-align:center;">
+            &copy; 2023 - ПК Оздоровление сотрудников ОАО "Гомельтранснефть Дружба" (Все права защищены!!!)
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

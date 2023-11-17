@@ -1,0 +1,98 @@
+﻿@model IEnumerable<HealthCore.Models.Banks>
+<h3>Банки</h3>
+<hr>
+
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+
+<p>
+    <button type="button" class="btn btn-outline-secondary" onclick="AddBank(0)"><i class="mdi mdi-library-plus"></i> Добавить банк</button>
+</p>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+           Название
+        </th>
+
+        <th>
+            Страна
+        </th>
+
+        <th>
+           Город
+        </th>
+               
+        <th>
+            Создал
+        </th>
+
+        <th>
+            Дата создания
+        </th>
+                                     
+        <th>
+            &nbsp;
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.Country.Name) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.Name)
+            </td>
+           
+                <td>
+                @Html.DisplayFor(modelItem => item.UserModif)
+            </td>
+            <td>                
+               @Html.DisplayFor(modelItem => item.DateModif)
+            </td>                  
+            <td>
+                <button type="button" class="btn btn-outline-primary"  onclick="BankEdit(@item.Id)" title="Редактировать"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+</svg></button>
+                <button type="button" class="btn btn-outline-danger"  onclick="DeleteBank(@item.Id)" title="Удалить"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg></button>
+            </td>
+        </tr>
+    }
+
+</table>

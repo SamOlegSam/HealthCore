@@ -1,0 +1,84 @@
+﻿@model HealthCore.Models.Banks
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление банка</h5>
+</div>
+<div class="modal-body">
+    <input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>       
+    
+                <table>
+                     <tr>
+                        <td colspan = "3"><label><b>Название</b></label></td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan = "3">
+                            <input type="text" class="form-control btn-block" id="Name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "3"><label><b>Город</b></label></td>
+                        
+                    </tr>
+
+                    <tr>
+                        <td colspan = "3">
+                            <select class="form-select" contenteditable="true" id="idUS">
+                   <option value="0" selected >Выберите город</option>
+                    @foreach (var fil in ViewBag.listcity)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>
+                       
+                    }                       
+                                       
+                </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan = "3"><label><b>Адресс</b></label></td>
+                        
+                    </tr>
+
+                    <tr>
+                        <td colspan = "3">
+                            <input type="text" class="form-control btn-block" id="Address" />
+                        </td>
+                    </tr>                                                          
+
+                    <tr>
+                        <td><label><b>БИК</b></label></td>
+                        <td>&nbsp;</td>
+                        <td><label><b>УНП</b></label></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" class="form-control btn-block" id="BIC" /></td>
+                        <td>&nbsp;</td>
+                        <td><input type="text" class="form-control btn-block" id="UNP" /></td>
+                    </tr>
+
+                    <tr>
+                        <td><label><b>ОКПО</b></label></td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" class="form-control btn-block" id="OKPO" /></td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+                </table>
+                                
+</div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="BankSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+
+

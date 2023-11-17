@@ -1,0 +1,136 @@
+﻿@model HealthCore.Models.Dogovor
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление договора</h5>
+</div>
+<div class="modal-body">
+    <input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+        
+    <table>
+
+        <tr>
+            <td>
+<center><label> Тип договора</label></center>
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <center><label> Сумма договора </label></center>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+ <select class="form-select" contenteditable="true" id="TypeDog">
+                   <option value="0" selected >Выберите тип договора</option>
+                    @foreach (var fil in ViewBag.listType)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>                       
+                    }
+                                       
+                </select>
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <input type="text" class="form-control btn-block" id="SummaDog" value="0.00" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё]/, '');" readonly/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+<center><label> Номер договора</label></center>
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <center><label> Дата договора </label></center>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+<input type="text" class="form-control btn-block" id="Number" />
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <input type="date" class="form-control btn-block" id="DataDog" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+<center><label> Дата начала действия</label></center>
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <center><label> Дата окончания действия</label></center>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+<input type="date" class="form-control btn-block" id="DataStart" />
+            </td>
+            <td>
+                &nbsp;&nbsp;
+            </td>
+            <td>
+ <input type="date" class="form-control btn-block" id="DataEnd" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan = 3>
+<center><label>Контрагент</label></center>
+    <select class="form-select" contenteditable="true" id="Sanatorium">
+                   <option value="0" selected >Выберите контрагента</option>
+                    @foreach (var fil in ViewBag.listdogovor)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>                       
+                    }
+                                       
+                </select>
+            </td>            
+        </tr>
+        <tr>
+            <td colspan = 3>
+<center><label>Контроль</label></center>
+    <select class="form-select" contenteditable="true" id="PriznakKontrol">
+                   <option value="0" selected >Без контроля</option>
+                   <option value="1" >Договор пролангируется</option>
+                   <option value="2" >Контроль суммы договора</option>
+                   <option value="3" >Контроль БВ</option>
+                </select>
+            </td>            
+        </tr>
+    </table>
+                                        
+</div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="DogovorSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+<script>
+    $('#PriznakKontrol').change(function(){
+	
+  if($('#PriznakKontrol').val() == 2)
+  {
+    $('#SummaDog').prop('readonly',false);
+  }  
+  else
+  {
+  $('#SummaDog').prop('readonly', true);  
+  }
+});
+</script>
+

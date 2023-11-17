@@ -1,0 +1,45 @@
+﻿@model HealthCore.Models.City
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование города</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>Город</label>
+    <input type="text" class="form-control btn-block" id="CityEdit" value="@Model.Name" />
+       
+     <label>Страна</label>
+    
+    <select class="form-select" contenteditable="true" id="idUSEdit">
+
+        @foreach (var dol in ViewBag.listcountry)
+        {
+            if (dol.Id == @Model.CountryId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+
+    
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-secondary" style="min-width:100px" onclick="CityEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

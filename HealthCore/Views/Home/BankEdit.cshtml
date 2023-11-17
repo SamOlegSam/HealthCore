@@ -1,0 +1,92 @@
+﻿@model HealthCore.Models.Banks
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование банка</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+        
+    <table>
+         <tr>
+                        <td colspan = "3"><label><b>Название</b></label></td>                        
+                    </tr>
+
+                    <tr>
+                        <td colspan = "3">
+                            <input type="text" class="form-control btn-block" id="NameEdit" value="@Model.Name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "3"><label><b>Город</b></label></td>                        
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <select class="form-select" contenteditable="true" id="idUSEdit">
+
+        @foreach (var dol in ViewBag.listcity)
+        {
+            if (dol.Id == @Model.CityId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+                        </td>
+                    </tr>                                       
+
+                    <tr>
+                        <td colspan = "3"><label><b>Адресс</b></label></td>                        
+                    </tr>
+
+                    <tr>
+                        <td colspan = "3">
+                            <input type="text" class="form-control btn-block" id="AddressEdit" value="@Model.Address"/>
+                        </td>
+                    </tr>
+                                        
+                    <tr>
+                        <td><label><b>БИК</b></label></td>
+                        <td>&nbsp;</td>
+                        <td><label><b>УНП</b></label></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" class="form-control btn-block" id="BICEdit" value="@Model.Bic"/></td>
+                        <td>&nbsp;</td>
+                        <td><input type="text" class="form-control btn-block" id="UNPEdit" value="@Model.Unp"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><label><b>ОКПО</b></label></td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" class="form-control btn-block" id="OKPOEdit" value="@Model.Okpo"/></td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+                </table>
+    
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-secondary" style="min-width:100px" onclick="BankEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,255 @@
+﻿@model IEnumerable<HealthCore.Models.Protocol>
+
+    <style>
+    .loader {
+        overflow: hidden;
+        font-size: 5px;
+        margin: 50px auto;
+        text-indent: -9999em;
+        width: 11em;
+        height: 11em;
+        border-radius: 50%;
+        background: #4682B4;
+        background: -moz-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -webkit-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -o-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: -ms-linear-gradient(left, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        background: linear-gradient(to right, #4682B4 10%, rgba(101,171,248, 0) 42%);
+        position: relative;
+        -webkit-animation: load3 1.4s infinite linear;
+        animation: load3 1.4s infinite linear;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+        .loader:before {
+            width: 50%;
+            height: 50%;
+            background: #4682B4;
+            border-radius: 100% 0 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+        }
+
+        .loader:after {
+            background: white;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            content: '';
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+    @@-webkit-keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes load3 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+
+<h3>Протоколы</h3>
+<hr>
+
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+
+
+<table>
+       <tr style="background-color:transparent;">
+        <td>
+            <button type="button" class="btn btn-outline-secondary" onclick="AddProtocol(0)"><i class="mdi mdi-library-plus"></i> Добавить протокол</button>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            с
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <input type="date" class="form-control btn-block" id="SZ" style="width:150px;" />
+            <script>
+                window.addEventListener('load',
+                    function (e) {
+                        var d = new Date();
+                        var day = d.getDate(); if (day < 10) day = '0' + day;
+                        var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                        var year = d.getFullYear();
+                        document.getElementById("SZ").value = year + "-" + "01" + "-" + "01";
+                    }, false);
+            </script>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            по
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <input type="date" class="form-control btn-block" id="PoZ" style="width:150px;" />
+            <script>
+                var d = new Date();
+                var day = d.getDate(); if (day < 10) day = '0' + day;
+                var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                var year = d.getFullYear();
+                document.getElementById("PoZ").value = year + "-" + month + "-" + day;
+            </script>
+        </td>
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        
+        <td>
+            &nbsp; &nbsp;
+        </td>
+        <td>
+            <button type="button" class="btn btn-outline-secondary" onclick="GetProtTab()">Вывести</button>
+        </td>
+        
+    </tr>
+</table>
+<p></p>
+
+<center>
+    <div class="loader" id="loadImgZ" style="display:none;">
+    </div>
+</center>
+
+<div id="TableProt">
+<table class="table table-striped">
+    <tr>
+        <th>
+           Номер
+        </th>
+
+        <th>
+            Дата протокола
+        </th>
+
+        <th>
+            Подразделение
+        </th>
+
+        <th>
+            Создал
+        </th>
+
+        <th>
+            Дата создания
+        </th>
+                                     
+        <th>
+            &nbsp;
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberP)
+            </td>
+            <td>
+                @{
+                    string DB = Convert.ToDateTime(item.DateProt).ToString("d");
+                    if(item.DateProt == null)
+                    {
+                        DB = "";
+                    }
+                }
+                @Html.DisplayFor(modelItem => DB)
+            <td>
+                @Html.DisplayFor(modelItem => item.Filial.Name) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserModific)
+            </td>
+            <td>                
+                @{
+                    if(item.DateModific == null)
+                    {
+                        
+                    }
+                }
+                @Html.DisplayFor(modelItem => item.DateModific)
+            </td>
+                                  
+            <td>
+                 <button type="button" class="btn btn-outline-primary"  onclick="ProtocolEdit(@item.Id)" title="Редактировать"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+</svg></button>
+                <button type="button" class="btn btn-outline-danger"  onclick="DeleteProtocol(@item.Id)" title="Удалить"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg></button>   
+
+<button type="button" class="btn btn-outline-warning" onclick="PrintProtocolWord(@item.Id)" title="Печать"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+  <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+  <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+</svg></button>
+            </td>
+        </tr>
+    }
+
+</table>
+</div>

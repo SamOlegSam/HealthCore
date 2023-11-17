@@ -1,0 +1,36 @@
+﻿@using System.Security.Claims
+@model HealthCore.Models.Protocol
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление протокола</h5>
+</div>
+<div class="modal-body">
+    <input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+        
+    <label>Номер протокола</label>
+    <input type="text" class="form-control btn-block" id="Number" value = "@ViewBag.numberProt"/>
+
+    <label>Дата протокола</label>
+    <input type="date" class="form-control btn-block" id="DateP" />
+    <script>        
+                    var d = new Date();
+                            var day = d.getDate(); if (day < 10) day = '0' + day;
+                            var month = d.getMonth() + 1; if (month < 10) month = '0' + month;
+                            var year = d.getFullYear();
+                            document.getElementById("DateP").value = year + "-" + month + "-" + day;
+                    
+    </script>
+        
+        
+                                
+</div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="ProtocolSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+
+

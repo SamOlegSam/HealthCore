@@ -1,0 +1,86 @@
+﻿@model HealthCore.Models.Komissiya
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование члена комиссии</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>Назначение</label>
+    
+    <select class="form-select" contenteditable="true" id="statusEdit">
+
+        @foreach (var dol in ViewBag.Listnazn)
+        {
+            if (dol.Id == @Model.StatusId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+       
+     <label>Сотрудник</label>
+    
+    <select class="form-select" contenteditable="true" id="EmplEdit">
+
+        @foreach (var dol in ViewBag.listempl)
+        {
+            if (dol.Id == @Model.EmployeeId)
+            {
+                <option value="@dol.Id" selected> @dol.FirstName @dol.LastName @dol.MiddleName </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.FirstName @dol.LastName @dol.MiddleName </option>
+            }
+        }
+    </select>
+
+    <hr>
+    <table>
+    @if (Model.Priznak == "1")
+    {
+        <tr style="background-color:white">
+            <td>
+                <input type="checkbox" id="rules" class="checkbox" checked>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+                <label> Является подписантом</label>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr style="background-color:white">
+            <td>
+                <input type="checkbox" id="rules" class="checkbox">
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+                <label> Является подписантом</label>
+            </td>
+        </tr>
+    }
+</table>
+    
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="KomissiyaEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,103 @@
+﻿@using System.Security.Principal
+@model HealthCore.Models.User
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование пользователя</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>Login</label>
+    <input type="text" class="form-control btn-block" id="NameEdit" value="@Model.Name" />
+
+    <label>Password</label>
+    <input type="text" class="form-control btn-block" id="PasswordEdit" />
+
+     <label>Пользователь</label>
+    @*<select class="form-select" contenteditable="true" id="idUSEdit">
+                   
+                    @foreach (var fil in ViewBag.Employee)
+                    {                       
+                            <option value="@fil.Id" selected> @fil.FirstName @fil.LastName @fil.MiddleName</option>
+                       
+                    }
+                                       
+                </select>*@
+
+    <select class="form-select" contenteditable="true" id="idUSEdit">
+
+        @foreach (var dol in ViewBag.Employee)
+        {
+            if (dol.Id == @Model.EmployeeId)
+            {
+                <option value="@dol.Id" selected> @dol.FirstName @dol.LastName @dol.MiddleName</option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.FirstName @dol.LastName @dol.MiddleName</option>
+            }
+        }
+    </select>
+
+    <center><label>Роли:</label></center>
+
+    @{
+        int u = 0;
+    }
+    <table id="RT">
+
+        @foreach (var item in ViewBag.LR)
+        {
+            u++;
+            int f = 0;
+            <tr style="background-color:white">
+
+                @foreach (var UR in ViewBag.UR)
+                {
+                    if (UR.RoleId == item.Id)
+                    {
+                        f = 1;
+                    }
+                }
+                @if (f == 1)
+                {
+                    <td>
+                        <input type="checkbox" id="role_@u" class="checkbox" name="inList" value="@item.Id" checked>
+                    </td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
+                        @item.Role
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <input type="checkbox" id="role_@u" class="checkbox" name="inList" value="@item.Id">
+                    </td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td>
+                        @item.Role
+                    </td>
+                }
+
+            </tr>
+            f = 0;
+        }
+    </table>
+
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="UserEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

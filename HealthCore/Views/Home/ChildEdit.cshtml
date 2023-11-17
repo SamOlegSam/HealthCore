@@ -1,0 +1,89 @@
+﻿@model HealthCore.Models.Child
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование родственника</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>ФИО</label>
+    <input type="text" class="form-control btn-block" id="FIOEdit" value="@Model.Fio" />
+
+    <label>Сотрудник</label>
+    
+    <select class="form-select" contenteditable="true" id="EmployeeIDEdit">
+
+        @foreach (var dol in ViewBag.listemployee)
+        {
+            if (dol.Id == @Model.EmployeeId)
+            {
+                <option value="@dol.Id" selected> @dol.FirstName @dol.LastName @dol.MiddleName </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.FirstName @dol.LastName @dol.MiddleName </option>
+            }
+        }
+    </select>
+
+    <label>Степень родства</label>
+    
+    <select class="form-select" contenteditable="true" id="StatusIDEdit">
+
+        @foreach (var dol in ViewBag.liststatus)
+        {
+            if (dol.Id == @Model.StatusId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>       
+       
+    <label>Дата рождения</label>
+    <input type="date" class="form-control btn-block" id="BithDayEdit" value="@Model.DateBirth" />
+                    <script>
+
+                    var str = "@Model.DateBirth";
+                    
+                    var day = str.substr(0, 2);
+                    
+                    var month = str.substr(3, 2);
+                    
+                    var year = str.substr(6, 4);
+                    
+                    var strDate = year + "-" + month + "-" + day
+                    
+                    document.getElementById("BithDayEdit").value = strDate;
+
+                </script>
+
+   <label>Пол</label>
+    
+    <select class="form-select" contenteditable="true" id="PolEdit">
+       <option value="муж." selected>@Model.Pol</option>
+       <option value="муж.">муж.</option>
+       <option value="жен.">жен.</option>
+       <option value="ср.">ср.</option>
+    </select>
+       
+    
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-secondary" style="min-width:100px" onclick="ChildEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

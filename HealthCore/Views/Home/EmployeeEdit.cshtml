@@ -1,0 +1,158 @@
+﻿@model HealthCore.Models.Employee
+
+<div class="modal-header" style="text-align: center; background-color: #d4d7d9; border-radius:5px;">
+    <h5><b> Редактирование сотрудника</b></h5>
+</div>
+<div class="modal-body">
+
+    @*<label>ID записи</label>*@
+    <input type="hidden" class="form-control btn-block" id="IDEdit" value="@Model.Id" />
+
+    <label>Фамилия</label>
+    <input type="text" class="form-control btn-block" id="FirstEdit" value="@Model.FirstName" />
+
+    <label>Имя</label>
+    <input type="text" class="form-control btn-block" id="LastEdit" value="@Model.LastName" />
+
+    <label>Отчество</label>
+    <input type="text" class="form-control btn-block" id="MiddleEdit" value="@Model.MiddleName" />
+       
+     <label>Должность</label>
+    
+    <select class="form-select" contenteditable="true" id="PositionEdit">
+
+        @foreach (var dol in ViewBag.listposition)
+        {
+            if (dol.Id == @Model.PositionId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+
+    <label>Отдел</label>
+    
+    <select class="form-select" contenteditable="true" id="DepartmentEdit">
+
+        @foreach (var dol in ViewBag.listdepartment)
+        {
+            if (dol.Id == @Model.DepartmentId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+
+    <label>Подразделение</label>
+    
+    <select class="form-select" contenteditable="true" id="FillialEdit">
+
+        @foreach (var dol in ViewBag.listfillial)
+        {
+            if (dol.Id == @Model.FilialId)
+            {
+                <option value="@dol.Id" selected> @dol.Name </option>
+            }
+            else
+            {
+                <option value="@dol.Id"> @dol.Name</option>
+            }
+        }
+    </select>
+
+    <label>Адрес</label>
+    <input type="text" class="form-control btn-block" id="LastEdit" value="@Model.Address" />
+
+    <label>Дата рождения</label>
+    <input type="date" class="form-control btn-block" id="BithDayEdit" value="@Model.DateBirth" />
+                    <script>
+
+                    var str = "@Model.DateBirth";
+                    
+                    var day = str.substr(0, 2);
+                    
+                    var month = str.substr(3, 2);
+                    
+                    var year = str.substr(6, 4);
+                    
+                    var strDate = year + "-" + month + "-" + day
+                    
+                    document.getElementById("BithDayEdit").value = strDate;
+
+                </script>
+
+   <label>Пол</label>
+    <select class="form-select" contenteditable="true" id="PolEdit">
+       <option value="муж." selected>@Model.Pol</option>
+       <option value="муж.">муж.</option>
+       <option value="жен.">жен.</option>
+       <option value="ср.">ср.</option>
+    </select>
+     <hr>
+
+   <center><label>ФИО для отчетов</label></center>
+   <table>
+       <tr>
+           <td>
+<label>Родительный падеж</label>
+           </td>
+ <td>
+<input type="text" class="form-control btn-block" id="RPEdit" value="@Model.Fiorp" />
+ </td>
+       </tr>
+       <tr>
+           <td>
+<label>Дательный падеж</label>
+           </td>
+ <td>
+<input type="text" class="form-control btn-block" id="DPEdit" value="@Model.Fiodp" />
+ </td>
+       </tr>
+       <tr>
+           <td>
+<label>Винительный падеж</label>
+           </td>
+ <td>
+<input type="text" class="form-control btn-block" id="VPEdit" value="@Model.Fiovp" />
+ </td>
+       </tr>
+       <tr>
+           <td>
+<label>Творительный падеж</label>
+           </td>
+ <td>
+<input type="text" class="form-control btn-block" id="TPEdit" value="@Model.Fiotp" />
+ </td>
+       </tr>
+       <tr>
+           <td>
+<label>Предложный падеж</label>
+           </td>
+ <td>
+<input type="text" class="form-control btn-block" id="PPEdit" value="@Model.Fiopp" />
+ </td>
+       </tr>
+   </table>  
+    
+    <input type="hidden" class="form-control btn-block" id="UserModifEdit" value="@User.Identity?.Name" />
+    
+</div>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="EmployeeEditSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px">Отмена</button>
+</div>
+
+
+
+
+
+
+

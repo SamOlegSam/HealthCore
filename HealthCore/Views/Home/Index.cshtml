@@ -1,0 +1,100 @@
+﻿@model IEnumerable<HealthCore.Models.Dogovor>
+<h1 style="text-align:center;">
+    программный комплекс
+</h1>
+
+<style>
+#blink-2{
+  color: #FF0000;
+  font-size: 60px;
+  font-weight: 700;
+  text-align: center;
+  animation:blur .75s ease-out infinite;
+  text-shadow:text-shadow: 0 0 5px #abc, 0 0 7px #abc;
+}
+
+@@keyframes blur{
+  from{
+      text-shadow:0px 0px 10px #fff,
+      0px 0px 10px #fff, 
+      0px 0px 25px #fff,
+      0px 0px 25px #fff,
+      0px 0px 25px #fff,
+      0px 0px 25px #fff,
+      0px 0px 25px #fff,
+      0px 0px 25px #fff,
+      0px 0px 50px #fff,
+      0px 0px 50px #fff,
+      0px 0px 50px #7B96B8,
+      0px 0px 150px #7B96B8,
+      0px 10px 100px #7B96B8,
+      0px 10px 100px #7B96B8,
+      0px 10px 100px #7B96B8,
+      0px 10px 100px #7B96B8,
+      0px -10px 100px #7B96B8,
+      0px -10px 100px #7B96B8;}
+}
+</style>
+
+<h1 style="text-align:center;">
+    <b>Оздоровление сотрудников ОАО "Гомельтранснефть Дружба"</b>
+</h1>
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+<p>&nbsp;</p>
+@{
+    int y = 0;
+}
+@foreach(var i in ViewBag.Zay30)
+{
+    y++;
+}
+@if(Model.Count() == 0 && @y == 0 )
+{
+    <center><img src="/Images/milograd.png" ></center>
+}
+
+else
+{
+    <center><H2 id="blink-2">ВНИМАНИЕ!!!</H2></center>
+    @if(Model.Count() > 1)
+    {
+        <center><H2>заканчивается срок действия договоров:</H2></center>
+    }
+    else if(Model.Count() == 1)
+    {
+        <center><H2>заканчивается срок действия договора:</H2></center>
+    }
+    else
+    {
+        
+    }
+
+    @foreach(var item in Model)
+    {
+       <center><h3 style = "color:red;"><b>№ @item.Number от @Convert.ToDateTime(@item.DateDog).ToString("d") с @item.Sanatorium.Name</b></h3></center> 
+    }
+
+    @if (@y > 0)
+    {
+        <center><H2>Подходит срок оплаты оздоровления для следующих работников:</H2></center>
+        @foreach (var item1 in ViewBag.Zay30)
+        {
+            <center><h3 style = "color:red;"><b>@item1.Employee.FirstName @item1.Employee.LastName.Substring(0, 1).@item1.Employee.MiddleName.Substring(0, 1). Заявление № @item1.NumberZ от @Convert.ToDateTime(@item1.DateZ).ToString("d") с @Convert.ToDateTime(@item1.S).ToString("d")</b></h3></center>
+        }
+
+     }
+}

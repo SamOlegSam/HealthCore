@@ -1,0 +1,54 @@
+﻿@model HealthCore.Models.Sanatorium
+
+<div class="modal-header" style="text-align: center;background-color: #d4d7d9; border-radius:5px;">
+    <h5> Добавление контрагента</h5>
+</div>
+<input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+<div class="modal-body">
+    <label>Тип контрагента</label>
+    <select class="form-select" contenteditable="true" id="Kontr">
+                   <option value="0" selected >Выберите тип контагента</option>
+                   <option value="Санаторий" >Санаторий</option>
+                   <option value="ТурОператор" >ТурОператор</option> 
+                   <option value="Санаторий и ТурОператор" >Санаторий и ТурОператор</option>
+    </select>
+<label>Название</label>
+    <input type="text" class="form-control btn-block" id="Sanatorium" />
+    <label>Город</label>
+    <select class="form-select" contenteditable="true" id="idUS">
+                   <option value="0" selected >Выберите город</option>
+                    @foreach (var fil in ViewBag.listcountry)
+                    {                       
+                            <option value="@fil.Id"> @fil.Name </option>                       
+                    }                                       
+    </select>
+    <label>Юридический адрес</label>
+    <input type="text" class="form-control btn-block" id="Address" />
+
+     <label>Почтовый адрес</label>
+    <input type="text" class="form-control btn-block" id="PostAddress" />
+
+    <label>УНП</label>
+    <input type="text" class="form-control btn-block" id="UNP" />
+
+    <label>Банк</label>
+    <select class="form-select" contenteditable="true" id="BankID">
+                   <option value="0" selected >Выберите банк</option>
+                    @foreach (var fil1 in ViewBag.listbank)
+                    {                       
+                            <option value="@fil1.Id"> @fil1.Name </option>                       
+                    }                                       
+    </select>
+     <label>Рассчетный счет</label>
+    <input type="text" class="form-control btn-block" id="RS" />
+    </div>
+<center>
+<div class="modal-footer" style="text-align:center">
+    <button type="submit" class="btn btn-outline-primary" style="min-width:100px" onclick="SanatoriumSave(0)">Сохранить</button>
+    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" style="min-width:100px" >Отмена</button>
+    
+</div>
+</center>
+
+
+

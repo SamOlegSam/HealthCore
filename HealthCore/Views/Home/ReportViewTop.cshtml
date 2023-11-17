@@ -1,0 +1,198 @@
+﻿<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+<center><h3>Рейтинг санаториев</h3></center>
+
+<table class="table table-striped">   
+    <tr>
+<td>
+            <center><b>Санаторий</b></center>
+        </td>
+        <td>
+            <center><b>Посещений</b></center>
+        </td>
+        <td>
+            <center><b></b></center>
+        </td>        
+    </tr>
+@foreach(var item in @ViewBag.LZ)
+    {
+        <tr style="background-color:transparent;">
+            <td width=50%>
+            <b>@item.sanatorium</b>
+        </td>
+        <td width =10%>
+            <b>@item.count</b>
+        </td>
+        <td>
+            <div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: @(item.count*100/ViewBag.MaxCount)%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </td>
+        
+    </tr>
+    
+    }
+</table>
+
+
+
+
+@*<table class="table table-striped">         
+   
+@foreach(var company in @ViewBag.LZ)
+    {        
+        <tr style="background-color:#DCDCDC;">
+            <td colspan = 7>
+            <center><b>@company.Key</b></center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>п/п</b>
+        </td>
+        <td>
+            <b>ФИО</b>
+        </td>
+        <td>
+            <b>Дата с</b>
+        </td>
+        <td>
+            <b>Дата По</b>
+        </td>
+        <td>
+            <b>Санаторий</b>
+        </td>
+        <td>
+            <b>Сумма оплаты</b>
+        </td>
+        <td>
+            <b>Сумма допуслуг</b>
+        </td>
+        </tr>
+
+        foreach(var person in company)
+        {
+            u++;
+           @if(person.Who == "работника")
+            {
+                Rab++;
+            }
+            else if (person.Who == "пенсионера")
+            {
+                Pens++;
+            }
+
+            else if (person.Who == "детей")
+            {
+                Deti = Deti+ person.TableZay.Count;
+            }
+
+            else if (person.Who == "семейная")
+            {
+                Rab++;
+                Deti = Deti + person.TableZay.Count;
+            }
+            @if(person.Summa != null)
+            {
+                Itogo = Itogo + person.Summa;
+            }
+
+
+            <tr>
+            <td>
+                @u
+            </td>
+            <td>
+                @person.Employee.FirstName
+            </td>
+            <td>
+                @Convert.ToDateTime(person.S).ToString("d")
+            </td>
+            <td>
+                @Convert.ToDateTime(person.Po).ToString("d")
+            </td>
+            <td>
+                @person.Sanatorium.Name                
+                </td>
+            @if(@person.Summa == null)
+                    {
+                       <td style="border-radius: 15px; background-color:lightpink;">
+                
+                    </td>
+                }
+                else
+                {
+                   <td>
+                @person.Summa.ToString()
+                    </td> 
+                }
+            @if(@person.SummaDop == null)
+                    {
+                       <td style="border-radius: 15px; background-color:lightpink;">
+                -
+                    </td>
+                }
+                else
+                {
+                   <td>
+                @person.SummaDop.ToString()
+                    </td> 
+                }
+                </tr>
+        }
+        <tr style="border:initial; border-top-color:black;">
+            <td colspan=7>
+                <b>ИТОГО по филиалу:@(Deti + Rab + Pens)</b>
+                <br>
+                <b>Работников: @Rab</b>
+                <br>
+                <b>Детей: @Deti</b>
+                <br>
+                <b>Пенсионеров: @Pens</b>
+                <br>
+                <b>На сумму: @Itogo белорусских рублей</b>
+            </td>            
+        </tr>
+        u = 0;
+
+        DetiI = DetiI + Deti;
+        RabI = RabI + Rab;
+        PensI = PensI + Pens;
+        ItogoI = ItogoI + Itogo;
+
+        Deti = 0;
+        Rab = 0;
+        Pens = 0;
+        Itogo = 0;
+    }
+    <tr>
+        <td>
+
+        </td>
+        <td colspan=4>
+               <b>ИТОГО: @(RabI + DetiI + PensI)</b>
+                <br>
+                <b>Работников: @RabI</b>
+                <br>
+                <b>Детей: @DetiI</b>
+                <br>
+                <b>Пенсионеров: @PensI</b>
+                <br>
+                <b>На сумму: @ItogoI белорусских рублей</b>
+        </td>
+    </tr>
+</table>
+*@

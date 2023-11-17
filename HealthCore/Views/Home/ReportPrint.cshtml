@@ -1,0 +1,101 @@
+﻿<h3>Формирование отчёта</h3>
+<hr>
+<div id="ServicesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" id='ServicesModalContent'>
+
+        </div>
+    </div>
+</div>
+
+<div id="ServicesModalDelete" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" id='ServicesModalDeleteContent'>
+
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    
+    TH.tab {
+        background: #EFF5FB; /* Цвет фона */
+        border-bottom: double;
+    }
+
+    tr.tab:nth-child(odd) {
+        background: #EFF5FB; /* Цвет фона */
+    }
+
+    tr.tab:nth-child(even) {
+        background: #ffffff; /* Цвет фона */
+    }
+</style>
+<input type="hidden" class="form-control btn-block" id="UserModif" value="@User.Identity?.Name"/>
+<table class="table table-striped">
+    <tr>
+        <th>
+           <center>С</center>
+        </th>              
+        
+        <th>
+           &nbsp;
+        </th>
+
+        <th>
+            <center>По</center>
+        </th>
+
+        <th>
+            &nbsp;
+        </th>
+                                     
+        <th>
+           
+        </th>
+    </tr>
+    <tr>
+        <td>
+           <input type="date" class="form-control" id="dataS">
+        </td>              
+        
+        <td>
+           &nbsp;
+        </td>
+
+        <td>
+            <input type="date" class="form-control" id="dataPO">
+        </td>
+
+        <td>
+            &nbsp;
+        </td>
+                                     
+        <td>
+           <button type="button" onclick="ReportView(0)" class="btn btn-secondary" data-dismiss="modal" style="min-width:100px">Сформировать</button>
+           <button type="button" onclick="ReportDocx(0)" class="btn btn-secondary" data-dismiss="modal" style="min-width:100px">Печать(.docx)</button>
+        </td>
+    </tr>    
+    </table>
+   @{ 
+               int u = 0;
+           }
+<table id="RT">
+<tr style="background-color:transparent">
+    @foreach (var item in ViewBag.ListF)
+    {
+        u++;
+            <td>
+                <input type="checkbox" id="role_@u" class="checkbox" name="inList" value="@item.Id">
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+                @item.Name
+            </td>
+            <td>&nbsp;&nbsp;|&nbsp;&nbsp;</td>       
+    }
+</tr>
+</table>
+<hr>
+    <div id="TableRep">
+
+    </div>
